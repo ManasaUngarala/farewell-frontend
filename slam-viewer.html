@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Slam Book — All Messages</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --gold:#c9974a; --cream:#fdf6ee; --text:#3d2b1a; --muted:#7a6250; --border:rgba(201,151,74,0.25); }
+    body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text); min-height:100vh; padding:2rem 1rem; }
+    h1 { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:2.4rem; color:var(--gold); text-align:center; margin-bottom:0.4rem; }
+    .sub { text-align:center; color:var(--muted); font-size:0.88rem; margin-bottom:2rem; }
+    .card { background:#fff; border:1px solid var(--border); border-radius:4px; padding:1.5rem; margin:0 auto 1rem; max-width:640px; }
+    .from { font-weight:500; color:var(--gold); margin-bottom:0.3rem; }
+    .date { font-size:0.78rem; color:var(--muted); margin-bottom:0.8rem; }
+    .msg { font-family:'Cormorant Garamond',serif; font-size:1.1rem; line-height:1.9; white-space:pre-wrap; word-break:break-word; }
+    .total { text-align:center; color:var(--muted); font-size:0.85rem; margin:1rem 0 2rem; }
+    #status { text-align:center; padding:2rem; color:var(--muted); }
+    .config-note { max-width:640px; margin:0 auto 1.5rem; padding:1rem; background:rgba(201,151,74,0.1); border:1px solid var(--border); border-radius:4px; font-size:0.85rem; color:var(--muted); }
+    .config-note code { background:rgba(0,0,0,0.08); padding:2px 6px; border-radius:3px; font-family:monospace; }
+  </style>
+</head>
+<body>
+  <h1>My Slam Book 📖</h1>
+  <p class="sub">Words my friends left for me</p>
+
+  <div class="config-note">
+    ✏️ Before using: Open this file and update <code>API_BASE</code> on line 1 of the script to your backend URL.
+  </div>
+
+  <div id="status">Loading messages...</div>
+  <div id="entries"></div>
+
+<script>
+  // ✏️ Change this to your Render backend URL
+  const API_BASE = "https://YOUR-BACKEND.onrender.com";
+
+  async function load() {
+    try {
+      const res = await fetch(`${API_BASE}/admin/slam-entries`);
+      const data = await res.json();
+      const status = document.getElementById("status");
+      const container = document.getElementById("entries");
+
+      if (!data.entries || data.entries.length === 0) {
+        status.textContent = "No messages yet. Share your links and wait for your friends to write! 💌";
+        return;
+      }
+
+      status.innerHTML = `<p class="total">${data.total} message${data.total !== 1 ? 's' : ''} received</p>`;
+
+      data.entries.forEach(e => {
+        const d = new Date(e.submitted_at);
+        const dateStr = d.toLocaleDateString("en-IN", { day:"numeric", month:"long", year:"numeric", hour:"2-digit", minute:"2-digit" });
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="from">From: ${e.display_name}</div>
+          <div class="date">Written on ${dateStr}</div>
+          <div class="msg">${e.message.replace(/</g,"&lt;")}</div>
+        `;
+        container.appendChild(card);
+      });
+    } catch (err) {
+      document.getElementById("status").textContent = "Could not load entries. Make sure your backend is running.";
+    }
+  }
+  load();
+</script>
+</body>
+</html>

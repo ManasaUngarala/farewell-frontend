@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/friend/:path*", "destination": "/index.html" }
+  ]
+}
