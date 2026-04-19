@@ -12,7 +12,6 @@
 
     :root {
       --cream: #fdf6ee;
-      --warm: #f5e8d6;
       --gold: #c9974a;
       --gold-light: #e8c97a;
       --dark: #1a1209;
@@ -32,25 +31,19 @@
       overflow-x: hidden;
     }
 
-    /* ── Noise texture overlay ── */
     body::before {
       content: '';
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
+      pointer-events: none; z-index: 0;
     }
 
-    /* ── Floating petals ── */
+    /* Petals */
     .petals { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
     .petal {
-      position: absolute;
-      width: 8px; height: 12px;
-      background: var(--gold-light);
-      border-radius: 50% 0 50% 0;
-      opacity: 0;
-      animation: fall linear infinite;
+      position: absolute; width: 8px; height: 12px;
+      background: var(--gold-light); border-radius: 50% 0 50% 0;
+      opacity: 0; animation: fall linear infinite;
     }
     @keyframes fall {
       0%   { transform: translateY(-20px) rotate(0deg); opacity: 0; }
@@ -59,125 +52,73 @@
       100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
     }
 
-    /* ── Pages ── */
-    .page {
-      display: none;
-      min-height: 100vh;
-      position: relative;
-      z-index: 2;
-      animation: fadeUp 0.7s ease both;
-    }
+    /* Pages */
+    .page { display: none; min-height: 100vh; position: relative; z-index: 2; animation: fadeUp 0.7s ease both; }
     .page.active { display: flex; flex-direction: column; }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Decorative corner ── */
     .corner-decor {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 4px;
+      position: absolute; top: 0; left: 0; right: 0; height: 4px;
       background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
     }
 
-    /* ── Typography ── */
+    /* Typography */
     .serif { font-family: 'Cormorant Garamond', serif; }
     h1.serif { font-size: clamp(2.2rem, 8vw, 3.8rem); font-weight: 300; line-height: 1.15; }
     h2.serif { font-size: clamp(1.6rem, 5vw, 2.4rem); font-weight: 300; }
     .italic { font-style: italic; }
 
-    /* ── Gold divider ── */
-    .divider {
-      display: flex; align-items: center; gap: 12px;
-      margin: 1.5rem 0;
-    }
-    .divider::before, .divider::after {
-      content: ''; flex: 1; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold));
-    }
+    .divider { display: flex; align-items: center; gap: 12px; margin: 1.5rem 0; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
     .divider::after { background: linear-gradient(90deg, var(--gold), transparent); }
     .divider span { color: var(--gold); font-size: 1.1rem; }
 
-    /* ── Buttons ── */
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 14px 32px;
-      background: var(--gold);
-      color: #fff;
-      border: none; border-radius: 3px;
-      font-family: 'DM Sans', sans-serif;
+      padding: 14px 32px; background: var(--gold); color: #fff;
+      border: none; border-radius: 3px; font-family: 'DM Sans', sans-serif;
       font-size: 0.9rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.25s;
-      text-decoration: none;
+      cursor: pointer; transition: all 0.25s; text-decoration: none;
     }
     .btn:hover { background: #b8852f; transform: translateY(-1px); }
     .btn:active { transform: translateY(0); }
-    .btn-outline {
-      background: transparent;
-      border: 1.5px solid var(--gold);
-      color: var(--gold);
-    }
-    .btn-outline:hover { background: var(--gold); color: #fff; }
 
-    /* ── Inputs ── */
     .input-group { margin-bottom: 1.2rem; }
     .input-group label {
       display: block; margin-bottom: 6px;
-      font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--muted);
+      font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
     }
     .input-group input, .input-group textarea {
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(255,255,255,0.7);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      color: var(--text);
-      transition: border-color 0.2s;
-      -webkit-appearance: none;
+      width: 100%; padding: 12px 16px;
+      background: rgba(255,255,255,0.7); border: 1px solid var(--border); border-radius: 3px;
+      font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--text);
+      transition: border-color 0.2s; -webkit-appearance: none;
     }
     .input-group input:focus, .input-group textarea:focus {
-      outline: none;
-      border-color: var(--gold);
-      background: rgba(255,255,255,0.9);
+      outline: none; border-color: var(--gold); background: rgba(255,255,255,0.9);
     }
     .input-group textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
-    .error-msg {
-      display: none; margin-top: 8px;
-      color: #c0392b; font-size: 0.85rem;
-    }
+    .error-msg { display: none; margin-top: 8px; color: #c0392b; font-size: 0.85rem; }
     .error-msg.show { display: block; }
 
-    /* ── Card ── */
     .glass-card {
-      background: var(--card);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2.5rem;
+      background: var(--card); backdrop-filter: blur(12px);
+      border: 1px solid var(--border); border-radius: 4px; padding: 2.5rem;
     }
 
-    /* ══════════════════════════════════════════════════════
-       PAGE 1 — LANDING
-    ══════════════════════════════════════════════════════ */
+    /* ── PAGE 1 LANDING ── */
     #page-landing {
       justify-content: center; align-items: center;
-      padding: 2rem 1.5rem;
-      text-align: center;
+      padding: 2rem 1.5rem; text-align: center;
       background: radial-gradient(ellipse at 30% 20%, #f9edd6 0%, var(--cream) 60%);
     }
-
     .landing-inner { max-width: 560px; width: 100%; }
-
     .envelope-icon {
-      width: 72px; height: 72px;
-      margin: 0 auto 1.5rem;
-      background: var(--gold);
-      border-radius: 50%;
+      width: 72px; height: 72px; margin: 0 auto 1.5rem;
+      background: var(--gold); border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       animation: pulse 3s ease-in-out infinite;
     }
@@ -186,40 +127,17 @@
       50%       { box-shadow: 0 0 0 16px rgba(201,151,74,0); }
     }
     .envelope-icon svg { width: 32px; height: 32px; fill: white; }
+    .tagline { font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .landing-message { line-height: 1.9; color: var(--muted); margin: 1.5rem 0 2rem; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; }
+    .sender-sig { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; color: var(--gold); margin-top: 1.5rem; }
 
-    .tagline {
-      font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 1rem;
-    }
-
-    .landing-message {
-      font-size: 1.05rem; line-height: 1.9; color: var(--muted);
-      margin: 1.5rem 0 2rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-    }
-
-    .sender-sig {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic; font-size: 1.4rem;
-      color: var(--gold); margin-top: 1.5rem;
-    }
-
-    /* ══════════════════════════════════════════════════════
-       PAGE 2 — UNLOCK
-    ══════════════════════════════════════════════════════ */
+    /* ── PAGE 2 UNLOCK ── */
     #page-unlock {
-      justify-content: center; align-items: center;
-      padding: 2rem 1.5rem;
+      justify-content: center; align-items: center; padding: 2rem 1.5rem;
       background: radial-gradient(ellipse at 70% 80%, #f9edd6 0%, var(--cream) 60%);
     }
-
     .unlock-inner { max-width: 440px; width: 100%; }
-
-    .lock-icon {
-      font-size: 2.5rem; margin-bottom: 1rem; text-align: center;
-      animation: wobble 4s ease-in-out infinite;
-    }
+    .lock-icon { font-size: 2.5rem; margin-bottom: 1rem; text-align: center; animation: wobble 4s ease-in-out infinite; }
     @keyframes wobble {
       0%, 100% { transform: rotate(0deg); }
       20% { transform: rotate(-5deg); }
@@ -227,154 +145,155 @@
       60% { transform: rotate(-3deg); }
     }
 
-    /* ══════════════════════════════════════════════════════
-       PAGE 3 — SECRET MESSAGE
-    ══════════════════════════════════════════════════════ */
+    /* ── PAGE 3 SECRET MESSAGE WITH BACKGROUND IMAGE ── */
     #page-secret {
       align-items: center;
-      padding: 3rem 1.5rem;
-      background: radial-gradient(ellipse at 50% 0%, #fdf0df 0%, var(--cream) 50%);
+      padding: 0;
+      position: relative;
+      min-height: 100vh;
     }
 
-    .secret-inner { max-width: 640px; width: 100%; }
+    /* The background image layer */
+    #secret-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    #secret-bg.loaded { opacity: 1; }
+
+    /* Dark gradient overlay so text stays readable */
+    #secret-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(8, 4, 1, 0.62) 0%,
+        rgba(15, 8, 2, 0.50) 35%,
+        rgba(10, 5, 1, 0.72) 100%
+      );
+    }
+
+    /* Fallback dark bg while image loads */
+    #page-secret { background: #0d0702; }
+
+    .secret-inner {
+      position: relative; z-index: 2;
+      max-width: 660px; width: 100%;
+      padding: 3.5rem 1.5rem 5rem;
+    }
 
     .greeting-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 6vw, 3rem);
-      font-weight: 300; color: var(--gold);
-      margin-bottom: 0.3rem;
+      font-size: clamp(2.2rem, 7vw, 3.8rem);
+      font-weight: 300; font-style: italic;
+      color: #fff;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.7);
+      margin-bottom: 0.2rem; text-align: center;
     }
 
-    .music-player {
-      background: rgba(201,151,74,0.08);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 0.8rem 1.2rem;
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 2rem;
+    .secret-tagline {
+      text-align: center; font-size: 0.75rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--gold-light); margin-bottom: 2rem; opacity: 0.9;
     }
-    .music-note { font-size: 1.2rem; animation: spin 3s linear infinite; }
-    @keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
-    .music-label { font-size: 0.82rem; color: var(--muted); letter-spacing: 0.05em; }
-    .music-label strong { color: var(--gold); display: block; font-size: 0.85rem; }
+
+    /* Music bar */
+    .music-player {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(201,151,74,0.35);
+      backdrop-filter: blur(10px);
+      border-radius: 40px;
+      padding: 0.7rem 1.4rem;
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 2rem; width: fit-content; margin-left: auto; margin-right: auto;
+    }
+    .music-note { font-size: 1rem; animation: noteBounce 1.4s ease-in-out infinite; }
+    @keyframes noteBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+    .music-label { font-size: 0.8rem; color: rgba(255,255,255,0.75); letter-spacing: 0.05em; }
+    .music-label strong { color: var(--gold-light); font-size: 0.82rem; }
+
+    /* The letter card — frosted glass over the photo */
+    .secret-letter-card {
+      background: rgba(8, 4, 1, 0.58);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(201, 151, 74, 0.28);
+      border-radius: 8px;
+      padding: 2.5rem 2.5rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    /* Decorative quote mark */
+    .secret-letter-card::before {
+      content: '\201C';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem; line-height: 1;
+      color: var(--gold); opacity: 0.35;
+      display: block; margin-bottom: -1.5rem;
+    }
 
     .secret-letter {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.05rem, 3vw, 1.25rem);
-      line-height: 2;
-      color: var(--text);
+      font-size: clamp(1.12rem, 3.2vw, 1.32rem);
+      line-height: 2.1;
+      color: rgba(255, 252, 245, 0.94);
       white-space: pre-wrap;
       word-break: break-word;
     }
 
-    /* Photo grid */
-    .photos-section { margin-top: 3rem; }
-    .photos-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 12px;
-      margin-top: 1.2rem;
-    }
-    .photo-item {
-      aspect-ratio: 1;
-      overflow: hidden;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .photo-item:hover { transform: scale(1.03); }
-    .photo-item img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
+    /* Divider on dark bg */
+    #page-secret .divider::before { background: linear-gradient(90deg, transparent, rgba(201,151,74,0.5)); }
+    #page-secret .divider::after  { background: linear-gradient(90deg, rgba(201,151,74,0.5), transparent); }
+    #page-secret .divider span { color: var(--gold-light); }
+
+    /* Next button on dark bg */
+    #page-secret .next-line {
+      color: rgba(255,255,255,0.65); font-size: 1.05rem;
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      margin-bottom: 1.5rem;
     }
 
-    /* Lightbox */
-    .lightbox {
-      display: none; position: fixed; inset: 0; z-index: 100;
-      background: rgba(26,18,9,0.92);
-      align-items: center; justify-content: center;
-      padding: 1rem;
-    }
-    .lightbox.open { display: flex; }
-    .lightbox img {
-      max-width: 100%; max-height: 90vh;
-      border-radius: 4px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
-    }
-    .lightbox-close {
-      position: absolute; top: 1rem; right: 1rem;
-      width: 40px; height: 40px;
-      background: var(--gold); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: white; font-size: 1.3rem; font-weight: 300;
-    }
-
-    /* Hidden music iframe */
     #music-iframe { display: none; width: 0; height: 0; border: none; }
 
-    /* ══════════════════════════════════════════════════════
-       PAGE 4 — SLAM BOOK
-    ══════════════════════════════════════════════════════ */
+    /* ── PAGE 4 SLAM BOOK ── */
     #page-slam {
-      align-items: center;
-      padding: 3rem 1.5rem;
+      align-items: center; padding: 3rem 1.5rem;
       background: radial-gradient(ellipse at 20% 80%, #f9edd6 0%, var(--cream) 60%);
     }
-
     .slam-inner { max-width: 560px; width: 100%; }
-
-    .slam-prompt {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1rem, 3.5vw, 1.2rem);
-      line-height: 1.9;
-      color: var(--muted);
-      margin: 1.2rem 0 2rem;
-    }
-
-    .char-count {
-      text-align: right; font-size: 0.78rem;
-      color: var(--muted); margin-top: 4px;
-    }
-
-    .success-state {
-      display: none; text-align: center; padding: 2rem 0;
-    }
+    .slam-prompt { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 3.5vw, 1.2rem); line-height: 1.9; color: var(--muted); margin: 1.2rem 0 2rem; }
+    .char-count { text-align: right; font-size: 0.78rem; color: var(--muted); margin-top: 4px; }
+    .success-state { display: none; text-align: center; padding: 2rem 0; }
     .success-state.show { display: block; }
     .success-icon { font-size: 3rem; margin-bottom: 1rem; }
-    .success-state h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem; font-weight: 300;
-      color: var(--gold); margin-bottom: 0.5rem;
-    }
+    .success-state h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--gold); margin-bottom: 0.5rem; }
 
-    /* ── Responsive tweaks ── */
+    /* Responsive */
     @media (max-width: 480px) {
       .glass-card { padding: 1.8rem 1.4rem; }
       .btn { width: 100%; }
-      .photos-grid { grid-template-columns: repeat(2, 1fr); }
+      .secret-letter-card { padding: 1.8rem 1.4rem 1.5rem; }
+      .secret-letter-card::before { font-size: 3.5rem; }
     }
 
-    /* ── Loading spinner ── */
-    .spinner {
-      display: none; width: 20px; height: 20px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: white; border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-    }
+    /* Spinner */
+    .spinner { display: none; width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spinAnim 0.7s linear infinite; }
+    @keyframes spinAnim { to { transform: rotate(360deg); } }
     .btn.loading .spinner { display: block; }
     .btn.loading .btn-text { display: none; }
 
-    /* Scroll to top button */
     .scroll-top {
       position: fixed; bottom: 1.5rem; right: 1.5rem;
-      width: 44px; height: 44px;
-      background: var(--gold); color: white;
+      width: 44px; height: 44px; background: var(--gold); color: white;
       border-radius: 50%; border: none; cursor: pointer;
       display: none; align-items: center; justify-content: center;
-      font-size: 1.2rem; z-index: 50;
-      box-shadow: 0 4px 16px rgba(201,151,74,0.4);
+      font-size: 1.2rem; z-index: 50; box-shadow: 0 4px 16px rgba(201,151,74,0.4);
     }
     .scroll-top.show { display: flex; }
   </style>
@@ -382,7 +301,6 @@
 
 <body>
 
-<!-- Floating petals -->
 <div class="petals" id="petals"></div>
 
 <!-- ══════════════════════════════════
@@ -390,36 +308,27 @@
 ════════════════════════════════════ -->
 <div class="page active" id="page-landing">
   <div class="corner-decor"></div>
-
   <div class="landing-inner">
     <div class="envelope-icon">
       <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
     </div>
-
     <p class="tagline">A letter just for you</p>
-
     <h1 class="serif italic">Before We Part Ways...</h1>
-
     <div class="divider"><span>✦</span></div>
-
-    <!-- ✏️ EDIT THIS MESSAGE — it shows on the landing page for everyone -->
     <p class="landing-message serif italic" id="landing-msg">
-      Hey… it’s Manasa 😊
+      Hey… it's Manasa 😊
       Six years ago, we were strangers sharing the same corridors of college.
-      Today, you carry pieces of my story,This is just me....pausing for a moment
+      Today, you carry pieces of my story. This is just me.... pausing for a moment
       before life pulls us in different directions —
       Just one small, honest message 💗….
       <br><br>
-      So go ahead… (This ONE actually matters💛)
-      Read it when you feel like it."
+      So go ahead… (This ONE actually matters 💛)
+      Read it when you feel like it.
     </p>
-
     <div class="divider"><span>✦</span></div>
-
     <button class="btn" onclick="goToUnlock()">
       <span class="btn-text">Open Your Letter →</span>
     </button>
-
     <p class="sender-sig" id="sender-sig">— With love, Manasa Ungarala</p>
   </div>
 </div>
@@ -430,21 +339,18 @@
 ════════════════════════════════════ -->
 <div class="page" id="page-unlock">
   <div class="corner-decor"></div>
-
   <div class="unlock-inner">
-    <div class="lock-icon" style="text-align:center;">🔐</div>
-
+    <div class="lock-icon">🔐</div>
     <div style="text-align:center; margin-bottom:2rem;">
       <h2 class="serif italic">Your secret awaits</h2>
       <p style="color:var(--muted); margin-top:0.5rem; font-size:0.9rem; line-height:1.7;">
         I've sent you a personal passcode. Enter it below along with your name to unlock what I wrote just for you.
       </p>
     </div>
-
     <div class="glass-card">
       <div class="input-group">
         <label>Your Full Name</label>
-        <input type="text" id="inp-name" placeholder="e.g. Manasa Ungarala" autocomplete="off"/>
+        <input type="text" id="inp-name" placeholder="e.g. Ravi Kumar" autocomplete="off"/>
       </div>
       <div class="input-group">
         <label>Secret Passcode</label>
@@ -458,7 +364,6 @@
         <span class="btn-text">Reveal My Letter ✉️</span>
       </button>
     </div>
-
     <p style="text-align:center; margin-top:1.5rem; font-size:0.82rem; color:var(--muted);">
       Don't have a passcode? Check the message I sent you personally.
     </p>
@@ -467,15 +372,15 @@
 
 
 <!-- ══════════════════════════════════
-     PAGE 3: SECRET MESSAGE + PHOTOS
+     PAGE 3: SECRET MESSAGE + BG PHOTO
 ════════════════════════════════════ -->
 <div class="page" id="page-secret">
-  <div class="corner-decor"></div>
+  <div id="secret-bg"></div>
   <iframe id="music-iframe"></iframe>
 
   <div class="secret-inner">
-    <p class="tagline" style="text-align:center;">Your personal letter</p>
-    <h2 class="serif italic greeting-name" id="greeting-name" style="text-align:center;">Dear Friend,</h2>
+    <p class="secret-tagline">Your personal letter ✦</p>
+    <h2 class="greeting-name" id="greeting-name">Dear Friend,</h2>
 
     <div class="music-player" id="music-player" style="display:none;">
       <span class="music-note">♪</span>
@@ -485,37 +390,19 @@
       </div>
     </div>
 
-    <div class="glass-card" style="margin-bottom:2rem;">
+    <div class="secret-letter-card">
       <p class="secret-letter" id="secret-letter">Loading your message...</p>
     </div>
 
     <div class="divider"><span>✦</span></div>
 
-    <!-- PHOTOS SECTION -->
-    <div class="photos-section" id="photos-section" style="display:none;">
-      <h3 class="serif italic" style="font-size:1.5rem; text-align:center; font-weight:300; color:var(--gold);">
-        Memories we made ✨
-      </h3>
-      <div class="photos-grid" id="photos-grid"></div>
-    </div>
-
-    <div class="divider"><span>✦</span></div>
-
     <div style="text-align:center; margin-top:2rem;">
-      <p class="serif italic" style="color:var(--muted); font-size:1.1rem; margin-bottom:1.5rem;">
-        Now, before we part ways, I have a small request for you too...
-      </p>
+      <p class="next-line">Now, before we part ways, I have a small request for you too...</p>
       <button class="btn" onclick="goToSlam()">
         Write Something for Me →
       </button>
     </div>
   </div>
-</div>
-
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <div class="lightbox-close" onclick="closeLightbox()">✕</div>
-  <img id="lightbox-img" src="" alt="Memory photo"/>
 </div>
 
 
@@ -524,18 +411,14 @@
 ════════════════════════════════════ -->
 <div class="page" id="page-slam">
   <div class="corner-decor"></div>
-
   <div class="slam-inner">
     <p class="tagline" style="text-align:center;">Slam Book</p>
     <h2 class="serif italic" style="text-align:center;">Leave Me a Message</h2>
-
     <p class="slam-prompt" style="text-align:center;">
       As I start this new chapter, I want to carry your words with me.
       <br>What's one thing you'd like me to remember, change, or hold on to?
       <br><span style="color:var(--gold);">Your honest words mean the world to me.</span>
     </p>
-
-    <!-- The form part -->
     <div id="slam-form-area">
       <div class="glass-card">
         <div class="input-group">
@@ -552,8 +435,6 @@
         </button>
       </div>
     </div>
-
-    <!-- Success state -->
     <div class="success-state" id="slam-success">
       <div class="success-icon">💌</div>
       <h3 class="serif italic">Received with gratitude</h3>
@@ -569,21 +450,16 @@
   </div>
 </div>
 
-<!-- Scroll to top -->
 <button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-
 <script>
-  // ══════════════════════════════════════════════════════════════
-  // ✏️ CONFIGURATION — Update this after deploying your backend
-  // ══════════════════════════════════════════════════════════════
+  // ── CONFIG — your backend URL ─────────────────────────────────
   const API_BASE = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
     ? "http://127.0.0.1:8000"
     : "https://farewell-backend-3.onrender.com";
-  // While testing locally, change to: const API_BASE = "http://localhost:8000";
-  // After deploying to Render, use your Render URL above.
+  // ✏️ Replace above with your actual Render URL if it changed
 
-  // Get friend ID from URL: yourapp.vercel.app/friend/ravi → friendId = "ravi"
+  // ── Get friend ID from URL ────────────────────────────────────
   const qsFriendId = new URLSearchParams(window.location.search).get("friend")
     || new URLSearchParams(window.location.search).get("friend_id")
     || new URLSearchParams(window.location.search).get("id");
@@ -595,7 +471,7 @@
   let verifiedName = "";
   let verifiedData = null;
 
-  // ── Petals ──────────────────────────────────────────────────
+  // ── Petals ────────────────────────────────────────────────────
   const petalContainer = document.getElementById("petals");
   for (let i = 0; i < 12; i++) {
     const p = document.createElement("div");
@@ -611,28 +487,25 @@
     petalContainer.appendChild(p);
   }
 
-  // ── Scroll to top ────────────────────────────────────────────
+  // ── Scroll to top ─────────────────────────────────────────────
   window.addEventListener("scroll", () => {
     document.getElementById("scroll-top").classList.toggle("show", window.scrollY > 300);
   });
 
-  // ── Page navigation ──────────────────────────────────────────
+  // ── Page navigation ───────────────────────────────────────────
   function showPage(id) {
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-    const page = document.getElementById(id);
-    page.classList.add("active");
+    document.getElementById(id).classList.add("active");
     window.scrollTo(0, 0);
   }
-
   function goToUnlock() { showPage("page-unlock"); }
   function goToSlam()   { showPage("page-slam"); }
 
-  // ── Char count ───────────────────────────────────────────────
   function updateCharCount(el) {
     document.getElementById("char-count").textContent = el.value.length;
   }
 
-  // ── Unlock / Verify ──────────────────────────────────────────
+  // ── Unlock ────────────────────────────────────────────────────
   async function doUnlock() {
     const name     = document.getElementById("inp-name").value.trim();
     const passcode = document.getElementById("inp-passcode").value.trim();
@@ -640,21 +513,19 @@
     const btn      = document.getElementById("unlock-btn");
 
     errEl.classList.remove("show");
-
     if (!name || !passcode) {
       errEl.textContent = "Please fill in both your name and passcode.";
       errEl.classList.add("show");
       return;
     }
 
-    btn.classList.add("loading");
-    btn.disabled = true;
+    btn.classList.add("loading"); btn.disabled = true;
 
     try {
       const res = await fetch(`${API_BASE}/verify`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ full_name: name, passcode })
+        body: JSON.stringify({ friend_id: friendId, full_name: name, passcode })
       });
       const data = await res.json();
 
@@ -673,89 +544,73 @@
       errEl.textContent = "Network error. Please check your connection.";
       errEl.classList.add("show");
     } finally {
-      btn.classList.remove("loading");
-      btn.disabled = false;
+      btn.classList.remove("loading"); btn.disabled = false;
     }
   }
 
-  // ── Render secret page ───────────────────────────────────────
+  // ── Render secret page with background image ──────────────────
   function renderSecretPage(data) {
     document.getElementById("greeting-name").textContent = `Dear ${data.display_name},`;
     document.getElementById("secret-letter").textContent = data.secret_message;
+
+    // Set background image — uses first photo URL as the bg
+    const photos = data.photos || [];
+    const bgEl = document.getElementById("secret-bg");
+    if (photos.length > 0) {
+      const img = new Image();
+      img.onload = () => bgEl.classList.add("loaded");
+      img.onerror = () => {
+        // If image fails to load, show a warm dark gradient instead
+        bgEl.style.background = "linear-gradient(135deg, #1a0e05 0%, #2d1a0a 50%, #0d0702 100%)";
+        bgEl.classList.add("loaded");
+      };
+      img.src = photos[0];
+      bgEl.style.backgroundImage = `url('${photos[0]}')`;
+    } else {
+      // No photo — beautiful dark warm gradient fallback
+      bgEl.style.background = "linear-gradient(135deg, #1a0e05 0%, #2d1a0a 50%, #0d0702 100%)";
+      bgEl.classList.add("loaded");
+    }
 
     // Music
     if (data.music_url) {
       document.getElementById("music-iframe").src = data.music_url;
       document.getElementById("music-player").style.display = "flex";
     }
-
-    // Photos
-    const photos = data.photos || [];
-    if (photos.length > 0) {
-      const grid = document.getElementById("photos-grid");
-      grid.innerHTML = "";
-      photos.forEach(url => {
-        const div = document.createElement("div");
-        div.className = "photo-item";
-        div.onclick = () => openLightbox(url);
-        const img = document.createElement("img");
-        img.src = url;
-        img.alt = "Memory";
-        img.loading = "lazy";
-        div.appendChild(img);
-        grid.appendChild(div);
-      });
-      document.getElementById("photos-section").style.display = "block";
-    }
   }
 
-  // ── Lightbox ─────────────────────────────────────────────────
-  function openLightbox(src) {
-    document.getElementById("lightbox-img").src = src;
-    document.getElementById("lightbox").classList.add("open");
-    document.body.style.overflow = "hidden";
-  }
-  function closeLightbox() {
-    document.getElementById("lightbox").classList.remove("open");
-    document.body.style.overflow = "";
-  }
-
-  // ── Slam Book Submit ─────────────────────────────────────────
+  // ── Slam book submit ──────────────────────────────────────────
   async function submitSlam() {
-    const msg    = document.getElementById("slam-message").value.trim();
-    const errEl  = document.getElementById("slam-error");
-    const btn    = document.getElementById("slam-btn");
+    const msg   = document.getElementById("slam-message").value.trim();
+    const errEl = document.getElementById("slam-error");
+    const btn   = document.getElementById("slam-btn");
 
     errEl.classList.remove("show");
-
     if (!msg || msg.length < 5) {
       errEl.textContent = "Please write at least a few words.";
       errEl.classList.add("show");
       return;
     }
-
     if (!verifiedData) {
-      errEl.textContent = "Please unlock your letter first, then submit.";
+      errEl.textContent = "Please unlock your letter first.";
       errEl.classList.add("show");
       return;
     }
 
-    btn.classList.add("loading");
-    btn.disabled = true;
+    btn.classList.add("loading"); btn.disabled = true;
 
     try {
       const res = await fetch(`${API_BASE}/slam`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ friend_id: verifiedData.friend_id, full_name: verifiedName, message: msg })
+        body: JSON.stringify({ friend_id: verifiedData.friend_id || friendId, message: msg })
       });
       const data = await res.json();
 
       if (!res.ok) {
         errEl.textContent = data.detail || "Something went wrong. Try again.";
         errEl.classList.add("show");
-        btn.classList.remove("loading");
-        btn.disabled = false;
+        btn.classList.remove("loading"); btn.disabled = false;
         return;
       }
 
@@ -765,19 +620,16 @@
     } catch (e) {
       errEl.textContent = "Network error. Please check your connection.";
       errEl.classList.add("show");
-      btn.classList.remove("loading");
-      btn.disabled = false;
+      btn.classList.remove("loading"); btn.disabled = false;
     }
   }
 
-  // ── Enter key support ────────────────────────────────────────
+  // ── Enter key ─────────────────────────────────────────────────
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      const unlock = document.getElementById("page-unlock");
-      if (unlock.classList.contains("active")) doUnlock();
+    if (e.key === "Enter" && document.getElementById("page-unlock").classList.contains("active")) {
+      doUnlock();
     }
   });
 </script>
-
 </body>
 </html>
