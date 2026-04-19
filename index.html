@@ -38,7 +38,6 @@
       pointer-events: none; z-index: 0;
     }
 
-    /* Petals */
     .petals { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
     .petal {
       position: absolute; width: 8px; height: 12px;
@@ -52,7 +51,6 @@
       100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
     }
 
-    /* Pages */
     .page { display: none; min-height: 100vh; position: relative; z-index: 2; animation: fadeUp 0.7s ease both; }
     .page.active { display: flex; flex-direction: column; }
     @keyframes fadeUp {
@@ -65,7 +63,6 @@
       background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
     }
 
-    /* Typography */
     .serif { font-family: 'Cormorant Garamond', serif; }
     h1.serif { font-size: clamp(2.2rem, 8vw, 3.8rem); font-weight: 300; line-height: 1.15; }
     h2.serif { font-size: clamp(1.6rem, 5vw, 2.4rem); font-weight: 300; }
@@ -109,7 +106,7 @@
       border: 1px solid var(--border); border-radius: 4px; padding: 2.5rem;
     }
 
-    /* ── PAGE 1 LANDING ── */
+    /* ── PAGE 1 ── */
     #page-landing {
       justify-content: center; align-items: center;
       padding: 2rem 1.5rem; text-align: center;
@@ -131,7 +128,7 @@
     .landing-message { line-height: 1.9; color: var(--muted); margin: 1.5rem 0 2rem; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; }
     .sender-sig { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.4rem; color: var(--gold); margin-top: 1.5rem; }
 
-    /* ── PAGE 2 UNLOCK ── */
+    /* ── PAGE 2 ── */
     #page-unlock {
       justify-content: center; align-items: center; padding: 2rem 1.5rem;
       background: radial-gradient(ellipse at 70% 80%, #f9edd6 0%, var(--cream) 60%);
@@ -145,123 +142,146 @@
       60% { transform: rotate(-3deg); }
     }
 
-    /* ── PAGE 3 SECRET MESSAGE WITH BACKGROUND IMAGE ── */
+    /* ══════════════════════════════════════════
+       PAGE 3 — BACKGROUND IMAGE (MOBILE FIRST)
+    ══════════════════════════════════════════ */
     #page-secret {
       align-items: center;
       padding: 0;
       position: relative;
       min-height: 100vh;
+      /* Dark fallback while image loads */
+      background: #0d0702;
     }
 
-    /* The background image layer */
+    /* Background image — fixed so it covers full screen on all devices */
     #secret-bg {
       position: fixed;
-      inset: 0;
-      z-index: -1;
-      background-size: cover;
-      background-position: center top;
-      background-repeat: no-repeat;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
       opacity: 0;
       transition: opacity 1.2s ease;
+
+      /* This is the key for mobile friendliness */
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      /* Center for landscape/portrait — works for any image shape */
+      background-position: center center;
     }
     #secret-bg.loaded { opacity: 1; }
 
-    /* Dark gradient overlay so text stays readable */
+    /* Strong readable overlay — works on any photo brightness */
     #secret-bg::after {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(
-        160deg,
-        rgba(8, 4, 1, 0.62) 0%,
-        rgba(15, 8, 2, 0.50) 35%,
-        rgba(10, 5, 1, 0.72) 100%
-      );
+      /* Gradient: slightly lighter in middle so face/subject shows,
+         darker at top and bottom for text readability */
+      background:
+        linear-gradient(to bottom,
+          rgba(5, 2, 0, 0.70) 0%,
+          rgba(5, 2, 0, 0.40) 30%,
+          rgba(5, 2, 0, 0.40) 65%,
+          rgba(5, 2, 0, 0.80) 100%
+        );
     }
 
-    /* Fallback dark bg while image loads */
-    #page-secret { background: #0d0702; }
-
+    /* Content above background */
     .secret-inner {
-      position: relative; z-index: 2;
-      max-width: 660px; width: 100%;
-      padding: 3.5rem 1.5rem 5rem;
+      position: relative;
+      z-index: 2;
+      max-width: 640px;
+      width: 100%;
+      padding: 3.5rem 1.2rem 5rem;
+      /* Center content vertically if page is tall */
+      margin: 0 auto;
     }
 
     .greeting-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.2rem, 7vw, 3.8rem);
+      font-size: clamp(2.4rem, 8vw, 4rem);
       font-weight: 300; font-style: italic;
       color: #fff;
-      text-shadow: 0 2px 24px rgba(0,0,0,0.7);
-      margin-bottom: 0.2rem; text-align: center;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5);
+      margin-bottom: 0.2rem;
+      text-align: center;
+      line-height: 1.2;
     }
 
     .secret-tagline {
-      text-align: center; font-size: 0.75rem;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--gold-light); margin-bottom: 2rem; opacity: 0.9;
+      text-align: center; font-size: 0.72rem;
+      letter-spacing: 0.24em; text-transform: uppercase;
+      color: var(--gold-light); margin-bottom: 2rem; opacity: 0.85;
     }
 
-    /* Music bar */
+    /* Music pill */
     .music-player {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(201,151,74,0.35);
-      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(201,151,74,0.3);
+      backdrop-filter: blur(8px);
       border-radius: 40px;
-      padding: 0.7rem 1.4rem;
+      padding: 0.6rem 1.2rem;
       display: flex; align-items: center; gap: 10px;
-      margin-bottom: 2rem; width: fit-content; margin-left: auto; margin-right: auto;
+      margin: 0 auto 2rem;
+      width: fit-content; max-width: 100%;
     }
     .music-note { font-size: 1rem; animation: noteBounce 1.4s ease-in-out infinite; }
     @keyframes noteBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-    .music-label { font-size: 0.8rem; color: rgba(255,255,255,0.75); letter-spacing: 0.05em; }
-    .music-label strong { color: var(--gold-light); font-size: 0.82rem; }
+    .music-label { font-size: 0.78rem; color: rgba(255,255,255,0.72); letter-spacing: 0.04em; }
+    .music-label strong { color: var(--gold-light); font-size: 0.8rem; display: block; }
 
-    /* The letter card — frosted glass over the photo */
+    /* ── TRANSPARENT LETTER — key change ── */
     .secret-letter-card {
-      background: rgba(8, 4, 1, 0.58);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(201, 151, 74, 0.28);
-      border-radius: 8px;
-      padding: 2.5rem 2.5rem 2rem;
+      /* Fully transparent — no box, just the text with strong shadow for readability */
+      background: transparent;
+      border: none;
+      padding: 0 0.5rem;
       margin-bottom: 2rem;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+      position: relative;
     }
 
-    /* Decorative quote mark */
+    /* Decorative opening quote */
     .secret-letter-card::before {
       content: '\201C';
       font-family: 'Cormorant Garamond', serif;
-      font-size: 5rem; line-height: 1;
-      color: var(--gold); opacity: 0.35;
-      display: block; margin-bottom: -1.5rem;
+      font-size: 6rem; line-height: 0.8;
+      color: var(--gold-light);
+      opacity: 0.5;
+      display: block;
+      margin-bottom: -1rem;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.5);
     }
 
     .secret-letter {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.12rem, 3.2vw, 1.32rem);
+      font-size: clamp(1.15rem, 4vw, 1.35rem);
       line-height: 2.1;
-      color: rgba(255, 252, 245, 0.94);
+      /* Bright white with strong text-shadow so it's readable on ANY photo */
+      color: #ffffff;
+      text-shadow:
+        0 1px 3px rgba(0,0,0,0.9),
+        0 2px 8px rgba(0,0,0,0.7),
+        0 4px 16px rgba(0,0,0,0.5);
       white-space: pre-wrap;
       word-break: break-word;
     }
 
-    /* Divider on dark bg */
+    /* Gold divider on dark bg */
     #page-secret .divider::before { background: linear-gradient(90deg, transparent, rgba(201,151,74,0.5)); }
     #page-secret .divider::after  { background: linear-gradient(90deg, rgba(201,151,74,0.5), transparent); }
     #page-secret .divider span { color: var(--gold-light); }
 
-    /* Next button on dark bg */
-    #page-secret .next-line {
-      color: rgba(255,255,255,0.65); font-size: 1.05rem;
+    .next-line {
+      color: rgba(255,255,255,0.7); font-size: 1.05rem;
       font-family: 'Cormorant Garamond', serif; font-style: italic;
       margin-bottom: 1.5rem;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.8);
     }
 
     #music-iframe { display: none; width: 0; height: 0; border: none; }
 
-    /* ── PAGE 4 SLAM BOOK ── */
+    /* ── PAGE 4 ── */
     #page-slam {
       align-items: center; padding: 3rem 1.5rem;
       background: radial-gradient(ellipse at 20% 80%, #f9edd6 0%, var(--cream) 60%);
@@ -274,12 +294,14 @@
     .success-icon { font-size: 3rem; margin-bottom: 1rem; }
     .success-state h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--gold); margin-bottom: 0.5rem; }
 
-    /* Responsive */
+    /* ── Mobile ── */
     @media (max-width: 480px) {
       .glass-card { padding: 1.8rem 1.4rem; }
       .btn { width: 100%; }
-      .secret-letter-card { padding: 1.8rem 1.4rem 1.5rem; }
-      .secret-letter-card::before { font-size: 3.5rem; }
+      .secret-inner { padding: 2.5rem 1rem 4rem; }
+      .secret-letter { font-size: 1.12rem; line-height: 2; }
+      .secret-letter-card::before { font-size: 4rem; }
+      .greeting-name { font-size: clamp(2rem, 9vw, 3rem); }
     }
 
     /* Spinner */
@@ -303,9 +325,7 @@
 
 <div class="petals" id="petals"></div>
 
-<!-- ══════════════════════════════════
-     PAGE 1: LANDING
-════════════════════════════════════ -->
+<!-- PAGE 1: LANDING -->
 <div class="page active" id="page-landing">
   <div class="corner-decor"></div>
   <div class="landing-inner">
@@ -333,10 +353,7 @@
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════
-     PAGE 2: UNLOCK
-════════════════════════════════════ -->
+<!-- PAGE 2: UNLOCK -->
 <div class="page" id="page-unlock">
   <div class="corner-decor"></div>
   <div class="unlock-inner">
@@ -370,10 +387,7 @@
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════
-     PAGE 3: SECRET MESSAGE + BG PHOTO
-════════════════════════════════════ -->
+<!-- PAGE 3: SECRET MESSAGE + FULL BG PHOTO -->
 <div class="page" id="page-secret">
   <div id="secret-bg"></div>
   <iframe id="music-iframe"></iframe>
@@ -405,10 +419,7 @@
   </div>
 </div>
 
-
-<!-- ══════════════════════════════════
-     PAGE 4: SLAM BOOK
-════════════════════════════════════ -->
+<!-- PAGE 4: SLAM BOOK -->
 <div class="page" id="page-slam">
   <div class="corner-decor"></div>
   <div class="slam-inner">
@@ -453,13 +464,10 @@
 <button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
-  // ── CONFIG — your backend URL ─────────────────────────────────
   const API_BASE = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
     ? "http://127.0.0.1:8000"
     : "https://farewell-backend-4.onrender.com";
-  // ✏️ Replace above with your actual Render URL if it changed
 
-  // ── Get friend ID from URL ────────────────────────────────────
   const qsFriendId = new URLSearchParams(window.location.search).get("friend")
     || new URLSearchParams(window.location.search).get("friend_id")
     || new URLSearchParams(window.location.search).get("id");
@@ -471,7 +479,7 @@
   let verifiedName = "";
   let verifiedData = null;
 
-  // ── Petals ────────────────────────────────────────────────────
+  // Petals
   const petalContainer = document.getElementById("petals");
   for (let i = 0; i < 12; i++) {
     const p = document.createElement("div");
@@ -487,12 +495,10 @@
     petalContainer.appendChild(p);
   }
 
-  // ── Scroll to top ─────────────────────────────────────────────
   window.addEventListener("scroll", () => {
     document.getElementById("scroll-top").classList.toggle("show", window.scrollY > 300);
   });
 
-  // ── Page navigation ───────────────────────────────────────────
   function showPage(id) {
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     document.getElementById(id).classList.add("active");
@@ -500,12 +506,10 @@
   }
   function goToUnlock() { showPage("page-unlock"); }
   function goToSlam()   { showPage("page-slam"); }
-
   function updateCharCount(el) {
     document.getElementById("char-count").textContent = el.value.length;
   }
 
-  // ── Unlock ────────────────────────────────────────────────────
   async function doUnlock() {
     const name     = document.getElementById("inp-name").value.trim();
     const passcode = document.getElementById("inp-passcode").value.trim();
@@ -548,38 +552,38 @@
     }
   }
 
-  // ── Render secret page with background image ──────────────────
   function renderSecretPage(data) {
     document.getElementById("greeting-name").textContent = `Dear ${data.display_name},`;
     document.getElementById("secret-letter").textContent = data.secret_message;
 
-    // Set background image — uses first photo URL as the bg
     const photos = data.photos || [];
     const bgEl = document.getElementById("secret-bg");
+
     if (photos.length > 0) {
+      // Preload image first, then show with fade
       const img = new Image();
-      img.onload = () => bgEl.classList.add("loaded");
+      img.onload = () => {
+        bgEl.style.backgroundImage = `url('${photos[0]}')`;
+        // Small delay so background-image is painted before fade-in
+        setTimeout(() => bgEl.classList.add("loaded"), 50);
+      };
       img.onerror = () => {
-        // If image fails to load, show a warm dark gradient instead
+        // Image failed — use warm gradient fallback
         bgEl.style.background = "linear-gradient(135deg, #1a0e05 0%, #2d1a0a 50%, #0d0702 100%)";
         bgEl.classList.add("loaded");
       };
       img.src = photos[0];
-      bgEl.style.backgroundImage = `url('${photos[0]}')`;
     } else {
-      // No photo — beautiful dark warm gradient fallback
       bgEl.style.background = "linear-gradient(135deg, #1a0e05 0%, #2d1a0a 50%, #0d0702 100%)";
       bgEl.classList.add("loaded");
     }
 
-    // Music
     if (data.music_url) {
       document.getElementById("music-iframe").src = data.music_url;
       document.getElementById("music-player").style.display = "flex";
     }
   }
 
-  // ── Slam book submit ──────────────────────────────────────────
   async function submitSlam() {
     const msg   = document.getElementById("slam-message").value.trim();
     const errEl = document.getElementById("slam-error");
@@ -624,7 +628,6 @@
     }
   }
 
-  // ── Enter key ─────────────────────────────────────────────────
   document.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && document.getElementById("page-unlock").classList.contains("active")) {
       doUnlock();
