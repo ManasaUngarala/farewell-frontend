@@ -62,37 +62,57 @@
     .lock-icon { font-size: 2.5rem; margin-bottom: 1rem; text-align: center; animation: wobble 4s ease-in-out infinite; }
     @keyframes wobble { 0%, 100% { transform: rotate(0deg); } 20% { transform: rotate(-5deg); } 40% { transform: rotate(5deg); } 60% { transform: rotate(-3deg); } }
 
-    /* PAGE 3 */
-    #page-secret { align-items: center; padding: 0; position: relative; min-height: 100vh; background: #0d0702; }
-    #secret-bg {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 0; opacity: 0; transition: opacity 1.2s ease;
-      background-size: cover; background-repeat: no-repeat; background-position: center center;
+    /* ═══════════════════════════════════════════════
+       PAGE 3 — PORTRAIT IMAGE FIX (1:2 ratio)
+       Uses an <img> tag instead of background-image
+       so portrait photos always show fully on mobile
+    ═══════════════════════════════════════════════ */
+    #page-secret {
+      align-items: center; padding: 0;
+      position: relative; min-height: 100vh;
+      background: #0d0702;
     }
-    #secret-bg.loaded { opacity: 1; }
-    #secret-bg::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(5,2,0,0.70) 0%, rgba(5,2,0,0.40) 30%, rgba(5,2,0,0.40) 65%, rgba(5,2,0,0.80) 100%);
+
+    /* Full screen image using actual <img> tag — works perfectly for portrait */
+    #secret-bg-img {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+      object-fit: cover;        /* fills screen — no empty space */
+      object-position: center top; /* show top of portrait image (face area) */
     }
-    .secret-inner { position: relative; z-index: 2; max-width: 640px; width: 100%; padding: 3.5rem 1.2rem 5rem; margin: 0 auto; }
+    #secret-bg-img.loaded { opacity: 1; }
+
+    /* Dark overlay on top of the image */
+    #secret-bg-overlay {
+      position: fixed;
+      inset: 0; z-index: 1;
+      background: linear-gradient(
+        to bottom,
+        rgba(5,2,0,0.65) 0%,
+        rgba(5,2,0,0.35) 25%,
+        rgba(5,2,0,0.35) 70%,
+        rgba(5,2,0,0.80) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* Content sits above image and overlay */
+    .secret-inner {
+      position: relative; z-index: 2;
+      max-width: 640px; width: 100%;
+      padding: 3.5rem 1.2rem 5rem;
+      margin: 0 auto;
+    }
+
     .greeting-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.4rem, 8vw, 4rem); font-weight: 300; font-style: italic; color: #fff; text-shadow: 0 2px 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,0,0,0.5); margin-bottom: 0.2rem; text-align: center; line-height: 1.2; }
     .secret-tagline { text-align: center; font-size: 0.72rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 1.5rem; opacity: 0.85; }
 
-    /* ── MUSIC PLAYER BAR ── */
-    .music-bar {
-      display: none;
-      align-items: center; gap: 10px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(201,151,74,0.3);
-      backdrop-filter: blur(8px);
-      border-radius: 40px;
-      padding: 0.6rem 1.4rem;
-      margin: 0 auto 2rem;
-      width: fit-content; max-width: 90%;
-      cursor: pointer;
-      transition: background 0.2s;
-      user-select: none;
-    }
+    /* Music bar */
+    .music-bar { display: none; align-items: center; gap: 10px; background: rgba(255,255,255,0.07); border: 1px solid rgba(201,151,74,0.3); backdrop-filter: blur(8px); border-radius: 40px; padding: 0.6rem 1.4rem; margin: 0 auto 2rem; width: fit-content; max-width: 90%; cursor: pointer; transition: background 0.2s; user-select: none; }
     .music-bar:hover { background: rgba(255,255,255,0.13); }
     .music-bar.show { display: flex; }
     .music-note-icon { font-size: 1rem; }
@@ -100,9 +120,9 @@
     @keyframes noteBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
     .music-text { font-size: 0.78rem; color: rgba(255,255,255,0.72); }
     .music-text strong { color: var(--gold-light); font-size: 0.8rem; display: block; }
-    .music-btn { font-size: 0.7rem; color: rgba(255,255,255,0.45); margin-left: 6px; letter-spacing: 0.05em; text-transform: uppercase; }
+    .music-btn { font-size: 0.7rem; color: rgba(255,255,255,0.45); margin-left: 6px; }
 
-    /* Letter */
+    /* Letter — transparent, text readable via shadow */
     .secret-letter-card { background: transparent; border: none; padding: 0 0.5rem; margin-bottom: 2rem; }
     .secret-letter-card::before { content: '\201C'; font-family: 'Cormorant Garamond', serif; font-size: 6rem; line-height: 0.8; color: var(--gold-light); opacity: 0.45; display: block; margin-bottom: -1rem; text-shadow: 0 2px 12px rgba(0,0,0,0.5); }
     .secret-letter { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.15rem, 4vw, 1.35rem); line-height: 2.1; color: #ffffff; text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 2px 8px rgba(0,0,0,0.7), 0 4px 16px rgba(0,0,0,0.5); white-space: pre-wrap; word-break: break-word; }
@@ -202,15 +222,16 @@
   </div>
 </div>
 
-<!-- PAGE 3: SECRET MESSAGE -->
+<!-- PAGE 3: SECRET MESSAGE + PORTRAIT BG PHOTO -->
 <div class="page" id="page-secret">
-  <div id="secret-bg"></div>
+  <!-- Actual <img> tag — handles portrait images perfectly on all screen sizes -->
+  <img id="secret-bg-img" src="" alt=""/>
+  <div id="secret-bg-overlay"></div>
 
   <div class="secret-inner">
     <p class="secret-tagline">Your personal letter ✦</p>
     <h2 class="greeting-name" id="greeting-name">Dear Friend,</h2>
 
-    <!-- Music bar — tap to play/pause -->
     <div class="music-bar" id="music-bar" onclick="toggleMusic()">
       <span class="music-note-icon" id="music-note-icon">♪</span>
       <div class="music-text">
@@ -278,24 +299,17 @@
 <button class="scroll-top" id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
-  // ── CONFIG ────────────────────────────────────────────────────
   const API_BASE = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
     ? "http://127.0.0.1:8000"
     : "https://farewell-backend-4.onrender.com";
 
-  // ── This is the Jersey BGM — same for ALL friends ─────────────
-  // Your archive.org file. Update the filename below after checking SHOW ALL files.
   const BGM_URL = "https://archive.org/download/jersey-movie-ringtone-all-bgms-ringtones/Jersey%20movie%20ringtone%20-%20All%20bgms%20ringtones.mp3";
-  // If above doesn't work, go to archive.org → your upload → SHOW ALL → copy the .mp3 filename
-  // and replace the end part: jersey-movie-ringtone-all-bgms-ringtones.mp3 → actual filename
 
-  // ── Audio element (created once, lives forever) ───────────────
   const bgm = new Audio();
   bgm.loop = true;
-  bgm.volume = 0.35; // soft — 35% volume
+  bgm.volume = 0.35;
   let musicStarted = false;
 
-  // ── Friend ID from URL ────────────────────────────────────────
   const qsFriendId = new URLSearchParams(window.location.search).get("friend")
     || new URLSearchParams(window.location.search).get("friend_id")
     || new URLSearchParams(window.location.search).get("id");
@@ -306,7 +320,7 @@
 
   let verifiedData = null;
 
-  // ── Petals ────────────────────────────────────────────────────
+  // Petals
   const petalContainer = document.getElementById("petals");
   for (let i = 0; i < 12; i++) {
     const p = document.createElement("div");
@@ -319,86 +333,60 @@
     document.getElementById("scroll-top").classList.toggle("show", window.scrollY > 300);
   });
 
-  // ── Page navigation ───────────────────────────────────────────
   function showPage(id) {
     document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
     document.getElementById(id).classList.add("active");
     window.scrollTo(0, 0);
-
-    // Stop music when leaving secret page
     if (id !== "page-secret" && musicStarted) {
-      bgm.pause();
-      musicStarted = false;
+      bgm.pause(); musicStarted = false;
     }
   }
   function goToUnlock() { showPage("page-unlock"); }
   function goToSlam()   { showPage("page-slam"); }
   function updateCharCount(el) { document.getElementById("char-count").textContent = el.value.length; }
 
-  // ── Music controls ────────────────────────────────────────────
-  function startMusic(url) {
-    // Use the fixed BGM URL for all friends — ignore per-friend music_url
+  // Music
+  function startMusic() {
     bgm.src = BGM_URL;
     bgm.load();
-
-    const playPromise = bgm.play();
-    if (playPromise !== undefined) {
-      playPromise.then(() => {
-        // Autoplay worked
-        musicStarted = true;
-        updateMusicBar(true);
-        document.getElementById("music-bar").classList.add("show");
-      }).catch(() => {
-        // Browser blocked autoplay — show bar asking user to tap
-        document.getElementById("music-bar").classList.add("show");
-        document.getElementById("music-status").textContent = "Tap to play music";
-        document.getElementById("music-btn-label").textContent = "▶";
-        document.getElementById("music-note-icon").classList.remove("playing");
-      });
-    }
+    bgm.play().then(() => {
+      musicStarted = true;
+      updateMusicBar(true);
+      document.getElementById("music-bar").classList.add("show");
+    }).catch(() => {
+      document.getElementById("music-bar").classList.add("show");
+      document.getElementById("music-status").textContent = "Tap to play music";
+      document.getElementById("music-btn-label").textContent = "▶";
+      document.getElementById("music-note-icon").classList.remove("playing");
+    });
   }
 
   function toggleMusic() {
     if (bgm.paused) {
       bgm.src = bgm.src || BGM_URL;
-      bgm.play();
-      musicStarted = true;
-      updateMusicBar(true);
+      bgm.play(); musicStarted = true; updateMusicBar(true);
     } else {
-      bgm.pause();
-      musicStarted = false;
-      updateMusicBar(false);
+      bgm.pause(); musicStarted = false; updateMusicBar(false);
     }
   }
 
   function updateMusicBar(isPlaying) {
-    const noteIcon = document.getElementById("music-note-icon");
-    const btnLabel = document.getElementById("music-btn-label");
-    const status   = document.getElementById("music-status");
-    if (isPlaying) {
-      noteIcon.classList.add("playing");
-      btnLabel.textContent = "❚❚";
-      status.textContent = "Playing for you";
-    } else {
-      noteIcon.classList.remove("playing");
-      btnLabel.textContent = "▶";
-      status.textContent = "Music paused";
-    }
+    document.getElementById("music-note-icon").classList.toggle("playing", isPlaying);
+    document.getElementById("music-btn-label").textContent = isPlaying ? "❚❚" : "▶";
+    document.getElementById("music-status").textContent = isPlaying ? "Playing for you" : "Music paused";
   }
 
-  // ── Unlock ────────────────────────────────────────────────────
   async function doUnlock() {
-    const name    = document.getElementById("inp-name").value.trim();
+    const name     = document.getElementById("inp-name").value.trim();
     const passcode = document.getElementById("inp-passcode").value.trim();
-    const errEl   = document.getElementById("unlock-error");
-    const btn     = document.getElementById("unlock-btn");
+    const errEl    = document.getElementById("unlock-error");
+    const btn      = document.getElementById("unlock-btn");
 
     errEl.classList.remove("show");
     if (!name || !passcode) {
       errEl.textContent = "Please fill in both your name and passcode.";
       errEl.classList.add("show"); return;
     }
-
     btn.classList.add("loading"); btn.disabled = true;
 
     try {
@@ -417,8 +405,7 @@
       verifiedData = data;
       renderSecretPage(data);
       showPage("page-secret");
-      // Start music after page transition
-      setTimeout(() => startMusic(BGM_URL), 400);
+      setTimeout(() => startMusic(), 400);
 
     } catch (e) {
       errEl.textContent = "Network error. Please check your connection.";
@@ -428,31 +415,29 @@
     }
   }
 
-  // ── Render secret page ────────────────────────────────────────
   function renderSecretPage(data) {
     document.getElementById("greeting-name").textContent = `Dear ${data.display_name},`;
     document.getElementById("secret-letter").textContent = data.secret_message;
 
     const photos = data.photos || [];
-    const bgEl = document.getElementById("secret-bg");
+    const imgEl  = document.getElementById("secret-bg-img");
+
     if (photos.length > 0) {
-      const img = new Image();
-      img.onload = () => {
-        bgEl.style.backgroundImage = `url('${photos[0]}')`;
-        setTimeout(() => bgEl.classList.add("loaded"), 50);
+      imgEl.onload  = () => imgEl.classList.add("loaded");
+      imgEl.onerror = () => {
+        // fallback — hide img, show gradient on page bg
+        imgEl.style.display = "none";
+        document.getElementById("page-secret").style.background =
+          "linear-gradient(135deg, #1a0e05 0%, #2d1a0a 50%, #0d0702 100%)";
       };
-      img.onerror = () => {
-        bgEl.style.background = "linear-gradient(135deg, #1a0e05 0%, #2d1a0a 50%, #0d0702 100%)";
-        bgEl.classList.add("loaded");
-      };
-      img.src = photos[0];
+      imgEl.src = photos[0];
     } else {
-      bgEl.style.background = "linear-gradient(135deg, #1a0e05 0%, #2d1a0a 50%, #0d0702 100%)";
-      bgEl.classList.add("loaded");
+      imgEl.style.display = "none";
+      document.getElementById("page-secret").style.background =
+        "linear-gradient(135deg, #1a0e05 0%, #2d1a0a 50%, #0d0702 100%)";
     }
   }
 
-  // ── Slam book ─────────────────────────────────────────────────
   async function submitSlam() {
     const msg   = document.getElementById("slam-message").value.trim();
     const errEl = document.getElementById("slam-error");
@@ -467,7 +452,6 @@
       errEl.textContent = "Please unlock your letter first.";
       errEl.classList.add("show"); return;
     }
-
     btn.classList.add("loading"); btn.disabled = true;
 
     try {
